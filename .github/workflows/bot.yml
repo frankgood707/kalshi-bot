@@ -1,10 +1,10 @@
 name: Kalshi Bot
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "*/5 * * * *"
-
-jobs:
+  jobs:
   run-bot:
     runs-on: ubuntu-latest
 
