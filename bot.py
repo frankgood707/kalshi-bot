@@ -7,8 +7,8 @@ headers = {
     "Authorization": f"Bearer {API_KEY}"
 }
 
-url = "https://api.kalshi.com/trade-api/v2/markets"
 
+url = "https://trading-api.kalshi.com/v1/markets"
 def check_markets():
     r = requests.get(url, headers=headers)
     data = r.json()
