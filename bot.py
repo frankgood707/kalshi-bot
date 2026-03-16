@@ -1,27 +1,20 @@
 import requests
-import os
-
-API_KEY = os.getenv("KALSHI_API_KEY")
-
-headers = {
-    "Authorization": f"Bearer {API_KEY}"
-}
-
 
 url = "https://trading-api.kalshi.com/v1/markets"
+
 def check_markets():
-    r = requests.get(url, headers=headers)
-    data = r.json()
+    try:
+        r = requests.get(url, timeout=10)
+        data = r.json()
 
-    markets = data.get("markets", [])
+        markets = data.get("markets", [])
 
-    for market in markets[:10]:
-        ticker = market.get("ticker")
-        yes_price = market.get("yes_bid")
+        for market in markets[:10]:
+            ticker = market.get("ticker")
+            yes_price = market.get("yes_bid")
+            print(ticker, yes_price)
 
-        print(ticker, yes_price)
-
-        if yes_price and yes_price < 20:
-            print("Possible BUY:", ticker)
+    except Exception as e:
+        print("Connection failed:", e)
 
 check_markets()
