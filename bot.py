@@ -1,23 +1,22 @@
 import requests
 import time
 
-API_KEY = "YOUR_API_KEY_HERE"
-
-headers = {
-    "Authorization": f"Bearer {API_KEY}"
-}
+url = "https://api.kalshi.com/trade-api/v2/markets"
 
 def check_markets():
-    url = "https://api.kalshi.com/trade-api/v2/markets"
-    r = requests.get(url, headers=headers)
-    data = r.json()
+    try:
+        r = requests.get(url)
+        data = r.json()
 
-    for market in data["markets"]:
-        yes_price = market.get("yes_bid")
+        markets = data.get("markets", [])
 
-        if yes_price and yes_price < 30:
-            print("Cheap YES contract:", market["ticker"], yes_price)
+        for market in markets[:10]:
+            ticker = market.get("ticker")
+            yes_price = market.get("yes_bid")
 
-while True:
-    check_markets()
-    time.sleep(300)
+            print(ticker, yes_price)
+
+    except Exception as e:
+        print("Error:", e)
+
+check_markets()
