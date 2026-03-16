@@ -9,9 +9,14 @@ def check_markets():
 
         markets = data.get("markets", [])
 
-    for market in markets[:50]:
+        for market in markets[:50]:
     ticker = market.get("ticker")
     yes_price = market.get("yes_bid")
 
     if yes_price and yes_price < 20:
         print("CHEAP CONTRACT:", ticker, yes_price)
+
+    except Exception as e:
+        print("Connection failed:", e)
+
+check_markets()
